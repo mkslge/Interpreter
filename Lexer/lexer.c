@@ -6,6 +6,7 @@ struct {
     
 } Token;
 
+//regex for lexer to match with
 char* regex_plus = "+";
 char* regex_minus = "-";
 char* regex_number = "[:number]";
@@ -35,10 +36,15 @@ char* regex_semi_colon = ";";
 
 
 
+//lexer function
 int lexer(char* sentence) {
+    //make sure sentence is not null
     if(!sentence ) {
         return -1;
     }
+
+
+    //start comparing lexer to values
     regex_t regex;
     int value = regcomp(&regex, regex_variable_name,0);
     if(!value) {
@@ -51,15 +57,20 @@ int lexer(char* sentence) {
 }
 
 
-
+//get substring for lexer
 char* substring(char* string, int start, int end) {
+    //make new array
     char sol[end - start + 1];
+    //copy substring into new string using strncpy
     strncpy(sol, string + start, start - end + 1);
+    
+    //terminate string
     sol[end] = '\0';
 
     return sol;
 }
 
+//place holder main
 int main() {
     lexer("hi");
     return 0;
