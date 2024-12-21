@@ -1,7 +1,10 @@
 #include <regex.h>
 #include <stdio.h>
+#include <string.h>
 
-
+struct {
+    
+} Token;
 
 char* regex_plus = "+";
 char* regex_minus = "-";
@@ -22,4 +25,42 @@ char* regex_starting_brace = "{";
 char* regex_ending_brace = "}";
 char* regex_int = "int";
 char* regex_boolean = "bool";
-char* regex_
+char* regex_and = "&&";
+char* regex_or = "||";
+char* regex_not = "!";
+char* regex_variable_name = "[:word:]";
+char* regex_true = "true";
+char* regex_false = "false";
+char* regex_semi_colon = ";";
+
+
+
+int lexer(char* sentence) {
+    if(!sentence ) {
+        return -1;
+    }
+    regex_t regex;
+    int value = regcomp(&regex, regex_variable_name,0);
+    if(!value) {
+        printf("matched! ");
+        printf("%s",sentence);
+    } else {
+        printf("no match ):");
+    }
+    return 0;
+}
+
+
+
+char* substring(char* string, int start, int end) {
+    char sol[end - start + 1];
+    strncpy(sol, string + start, start - end + 1);
+    sol[end] = '\0';
+
+    return sol;
+}
+
+int main() {
+    lexer("hi");
+    return 0;
+}
