@@ -49,11 +49,22 @@ char* substring(char* string, int start, int end) {
 
 
 //lexer function
-Token* tokenize(char* sentence) {
+Token* tokenize(char* sentence, Token* currList) {
+
     //make sure sentence is not null
     if(!sentence ) {
         return -1;
     }
+
+    int emptyList = 0;
+    //since the use of tokenize is intended to begin with an empty list currList variable will
+    //be null so we will start with a NULL list, so we begin by making a dummy head token
+    if(!currList) {
+        currList = makeToken(DUMMY_TOKEN,"dummy", -1, -1);
+        //update to indicate we began with an empty list
+        emptyList = 1;
+    }
+    Token* head = currList;
 
 
     //start comparing lexer to values
@@ -61,12 +72,14 @@ Token* tokenize(char* sentence) {
     int value = -1;
 
 
-    //comparing number
+    //compile regex
     value = regcomp(&regex, regex_number, REG_EXTENDED);
+    //and then compare it to our input (do this for every token pattern)
     value = regexec(&regex, sentence, 0, NULL, 0);
 
     if(!value) {
         printf("Matched to number");
+        //STILL NEED TO MATCH WITH INTEGERS
         return 0;
     }
 
@@ -76,7 +89,10 @@ Token* tokenize(char* sentence) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         printf("Matched to bool keyword");
-        return 0;
+        currList->next = makeToken(BOOLEAN, "this is a bool", -1, -1);
+        sentence += 4;
+        currList = currList->next;
+        return currList;
     }
 
     //comparing int keyword
@@ -84,6 +100,8 @@ Token* tokenize(char* sentence) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         printf("Matched to int keyword");
+        currList->next = makeToken(BOOLEAN, NULL, -1, -1);
+
         return 0;
     }
 
@@ -103,7 +121,6 @@ Token* tokenize(char* sentence) {
         printf("Matched to Else");
         return 0;
     }
-    printf("Passed else");
 
     value = regcomp(&regex, regex_variable_name,0);
     value = regexec(&regex, sentence, 0, NULL, 0);
@@ -283,6 +300,11 @@ Token* tokenize(char* sentence) {
     }
 
 
+    if(emptyList) {
+        return head->next;
+    } else {
+        return currList;
+    }
     return NULL;
 }
 
@@ -295,6 +317,8 @@ Token* tokenize(char* sentence) {
 
 //place holder main
 int main() {
-    tokenize("else");
+    Token* test = tokenize("bool", NULL);
+    printf("%s\n", test->stringName);
+    //freeToken(test);
     return 0;
 }

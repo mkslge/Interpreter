@@ -7,6 +7,7 @@
 /* This struct stores all types of tokens in the language
 */
 typedef enum {
+    DUMMY_TOKEN,
     PLUS,
     MINUS,
     MULTIPLY,
@@ -41,14 +42,14 @@ typedef enum {
 
 } TokenType;
 
-
-typedef struct  {
+typedef struct Token Token;
+struct Token  {
     TokenType type;
     char* stringName;
     int integerValue;
     int booleanValue;
-
-} Token;
+    Token* next;
+};
 
 
 /* Constructor for token
@@ -62,12 +63,16 @@ Token* makeToken(TokenType type, char* name, int integerValue, int booleanValue)
     newToken->stringName = strdup(name);
     newToken->integerValue = integerValue;
     newToken->booleanValue = booleanValue;
+    newToken->next = NULL;
 
     return newToken;
 }
 
 void freeToken(Token *token) {
+    //first free the string
     free(token->stringName);
+
+    //then free the actual token object
     free(token);
 }
 
