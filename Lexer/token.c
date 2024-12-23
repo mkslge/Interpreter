@@ -1,3 +1,11 @@
+#include <regex.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+
+/* This struct stores all types of tokens in the language
+*/
 typedef enum {
     PLUS,
     MINUS,

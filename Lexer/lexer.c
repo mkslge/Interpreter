@@ -56,15 +56,17 @@ Token* lexer(char* sentence) {
 
     //start comparing lexer to values
     regex_t regex;
-    int value = regcomp(&regex, regex_variable_name,0);
+    int value = -1;
+
+
+    //comparing number
+    value = regcomp(&regex, regex_number,0);
     if(!value) {
-        printf("matched! ");
-        printf("%s",sentence);
-        //need to add the token to a list
-
+        
         return 0;
-    } 
+    }
 
+    
     //comparing bool keyword
     value = regcomp(&regex, regex_boolean,0);
     if(!value) {
@@ -78,6 +80,42 @@ Token* lexer(char* sentence) {
         
         return 0;
     }
+
+
+    //comparing if keyword
+    value = regcomp(&regex, regex_if,0);
+    if(!value) {
+
+        return 0;
+    }
+
+    //comparing else keyword
+    value = regcomp(&regex, regex_else,0);
+    if(!value) {
+        printf("Matched to Else");
+        return 0;
+    }
+    printf("Passed else");
+    //comparing int keyword
+    value = regcomp(&regex, regex_int,0);
+    if(!value) {
+        
+        return 0;
+    }
+
+
+
+
+    value = regcomp(&regex, regex_variable_name,0);
+    if(!value) {
+        printf("matched! ");
+        printf("%s",sentence);
+        //need to add the token to a list
+
+        return 0;
+    } 
+
+    
 
 
     //compares true
@@ -145,6 +183,35 @@ Token* lexer(char* sentence) {
         return 0;
     }
 
+
+    value = regcomp(&regex, regex_less_or_equal,0);
+    if(!value) {
+        
+        return 0;
+    }
+
+    value = regcomp(&regex, regex_more_or_equal,0);
+    if(!value) {
+        
+        return 0;
+    }
+
+
+
+
+    value = regcomp(&regex, regex_less_than,0);
+    if(!value) {
+        
+        return 0;
+    }
+
+
+    value = regcomp(&regex, regex_more_than,0);
+    if(!value) {
+        
+        return 0;
+    }
+
     //comparing equals
     value = regcomp(&regex, regex_equals,0);
     if(!value) {
@@ -152,15 +219,48 @@ Token* lexer(char* sentence) {
         return 0;
     }
 
-    
+    //comparing multiply
+    value = regcomp(&regex, regex_multiply,0);
+    if(!value) {
+        
+        return 0;
+    }
+
+    //comparing divides
+    value = regcomp(&regex, regex_divide,0);
+    if(!value) {
+        
+        return 0;
+    }
 
 
+    //comparing plus
+    value = regcomp(&regex, regex_plus,0);
+    if(!value) {
+        
+        return 0;
+    }
 
+    //comparing minus
+    value = regcomp(&regex, regex_minus,0);
+    if(!value) {
+        
+        return 0;
+    }
 
+    //comparing left parenthesis
+    value = regcomp(&regex, regex_lparen,0);
+    if(!value) {
+        
+        return 0;
+    }
 
-    
-
-
+    //comparing right parenthesis
+    value = regcomp(&regex, regex_rparen,0);
+    if(!value) {
+        
+        return 0;
+    }
 
 
     return -1;
@@ -175,6 +275,6 @@ Token* lexer(char* sentence) {
 
 //place holder main
 int main() {
-    lexer("hi");
+    lexer("else");
     return 0;
 }
