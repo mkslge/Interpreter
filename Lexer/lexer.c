@@ -100,9 +100,10 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         printf("Matched to int keyword");
-        currList->next = makeToken(BOOLEAN, NULL, -1, -1);
-
-        return 0;
+        currList->next = makeToken(INT, "this is an integer", -1, -1);
+        sentence += 3;
+        currList = currList->next;
+        return currList;
     }
 
 
@@ -111,7 +112,11 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         printf("Matched to if keyword");
-        return 0;
+        currList->next = makeToken(IF, "IF", -1, -1);
+        sentence += 2;
+        currList = currList->next;
+        return currList;
+        
     }
 
     //comparing else keyword
@@ -119,7 +124,10 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         printf("Matched to Else");
-        return 0;
+        currList->next = makeToken(ELSE, "ELSE", -1, -1);
+        sentence += 4;
+        currList = currList->next;
+        return currList;
     }
 
     value = regcomp(&regex, regex_variable_name,0);
@@ -139,8 +147,10 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regcomp(&regex, regex_true,0);
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
-
-        return 0;
+        currList->next = makeToken(TRUE, "TRUE", -1, -1);
+        sentence += 4;
+        currList = currList->next;
+        return currList;
     }
 
 
@@ -149,7 +159,10 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
 
-        return 0;
+        currList->next = makeToken(FALSE, "FALSE", -1, -1);
+        sentence += 5;
+        currList = currList->next;
+        return currList;
     }
 
     //comparing semicolon
@@ -157,7 +170,10 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
 
-        return 0;
+        currList->next = makeToken(SEMICOLON, ";", -1, -1);
+        sentence += 1;
+        currList = currList->next;
+        return currList;
     }
 
     //comparing not
@@ -165,15 +181,20 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
 
-        return 0;
+        currList->next = makeToken(NOT, "!", -1, -1);
+        sentence += 1;
+        currList = currList->next;
+        return currList;
     }
 
     //comparing or
     value = regcomp(&regex, regex_or,0);
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
-
-        return 0;
+        currList->next = makeToken(OR, "OR", -1, -1);
+        sentence += 2;
+        currList = currList->next;
+        return currList;
     }
 
     //comaparing and 
@@ -181,7 +202,10 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
 
-        return 0;
+        currList->next = makeToken(AND, "AND", -1, -1);
+        sentence += 3;
+        currList = currList->next;
+        return currList;
     }
 
     //comparing end brace
@@ -189,7 +213,10 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         
-        return 0;
+        currList->next = makeToken(RIGHT_BRACE, "}", -1, -1);
+        sentence += 1;
+        currList = currList->next;
+        return currList;
     }
 
     //comparing start brance
@@ -197,7 +224,10 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         
-        return 0;
+        currList->next = makeToken(LEFT_BRACE, "{", -1, -1);
+        sentence += 1;
+        currList = currList->next;
+        return currList;
     }
 
 
@@ -206,7 +236,10 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         
-        return 0;
+        currList->next = makeToken(EQUALS_COMPARISON, "==", -1, -1);
+        sentence += 2;
+        currList = currList->next;
+        return currList;
     }
 
 
@@ -214,14 +247,20 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         
-        return 0;
+        currList->next = makeToken(LESS_EQUAL_THAN, "<=", -1, -1);
+        sentence += 2;
+        currList = currList->next;
+        return currList;
     }
 
     value = regcomp(&regex, regex_more_or_equal,0);
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         
-        return 0;
+        currList->next = makeToken(MORE_EQUAL_THAN, ">=", -1, -1);
+        sentence += 2;
+        currList = currList->next;
+        return currList;
     }
 
 
@@ -231,7 +270,10 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         
-        return 0;
+        currList->next = makeToken(LESS_THAN, "<", -1, -1);
+        sentence += 1;
+        currList = currList->next;
+        return currList;
     }
 
 
@@ -239,7 +281,10 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         
-        return 0;
+        currList->next = makeToken(MORE_THAN, ">", -1, -1);
+        sentence += 1;
+        currList = currList->next;
+        return currList;
     }
 
     //comparing equals
@@ -247,7 +292,10 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         
-        return 0;
+        currList->next = makeToken(EQUALS, "=", -1, -1);
+        sentence += 1;
+        currList = currList->next;
+        return currList;
     }
 
     //comparing multiply
@@ -255,7 +303,10 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         
-        return 0;
+        currList->next = makeToken(MULTIPLY, "*", -1, -1);
+        sentence += 1;
+        currList = currList->next;
+        return currList;
     }
 
     //comparing divides
@@ -263,7 +314,10 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         
-        return 0;
+        currList->next = makeToken(DIVIDE, "/", -1, -1);
+        sentence += 1;
+        currList = currList->next;
+        return currList;
     }
 
 
@@ -272,7 +326,10 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         
-        return 0;
+        currList->next = makeToken(PLUS, "+", -1, -1);
+        sentence += 1;
+        currList = currList->next;
+        return currList;
     }
 
     //comparing minus
@@ -280,7 +337,10 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         
-        return 0;
+        currList->next = makeToken(MINUS, "-", -1, -1);
+        sentence += 1;
+        currList = currList->next;
+        return currList;
     }
 
     //comparing left parenthesis
@@ -288,15 +348,20 @@ Token* tokenize(char* sentence, Token* currList) {
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
         
-        return 0;
+        currList->next = makeToken(LEFT_PARENTHESIS, "(", -1, -1);
+        sentence += 1;
+        currList = currList->next;
+        return currList;
     }
 
     //comparing right parenthesis
     value = regcomp(&regex, regex_rparen,0);
     value = regexec(&regex, sentence, 0, NULL, 0);
     if(!value) {
-        
-        return 0;
+        currList->next = makeToken(RIGHT_PARENTHESIS, ")", -1, -1);
+        sentence += 1;
+        currList = currList->next;
+        return currList;
     }
 
 
@@ -317,7 +382,7 @@ Token* tokenize(char* sentence, Token* currList) {
 
 //place holder main
 int main() {
-    Token* test = tokenize("bool", NULL);
+    Token* test = tokenize("int", NULL);
     printf("%s\n", test->stringName);
     //freeToken(test);
     return 0;
