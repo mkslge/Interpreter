@@ -35,11 +35,6 @@ typedef enum {
     INTEGER,
     BOOLEAN,
     VARIABLE_NAME
-
-
-
-
-
 } TokenType;
 
 typedef struct Token Token;
@@ -74,6 +69,56 @@ void freeToken(Token *token) {
 
     //then free the actual token object
     free(token);
+}
+
+
+void printToken(Token *token) {
+    //exit if token is null
+    if(!token) {
+        printf("token is null ):\n");
+        return;
+    }
+    //otherwise match to each type of token type and a matching print statement
+    switch (token->type) {
+        case DUMMY_TOKEN: printf("DUMMY_TOKEN\n"); break;
+        case PLUS: printf("PLUS\n"); break;
+        case MINUS: printf("MINUS\n"); break;
+        case MULTIPLY: printf("MULTIPLY\n"); break;
+        case DIVIDE: printf("DIVIDE\n"); break;
+        case EQUALS: printf("EQUALS\n"); break;
+        case EQUALS_COMPARISON: printf("EQUALS_COMPARISON\n"); break;
+        case LESS_THAN: printf("LESS_THAN\n"); break;
+        case MORE_THAN: printf("MORE_THAN\n"); break;
+        case LESS_EQUAL_THAN: printf("LESS_EQUAL_THAN\n"); break;
+        case MORE_EQUAL_THAN: printf("MORE_EQUAL_THAN\n"); break;
+        case LEFT_PARENTHESIS: printf("LEFT_PARENTHESIS\n"); break;
+        case RIGHT_PARENTHESIS: printf("RIGHT_PARENTHESIS\n"); break;
+        case IF: printf("IF\n"); break;
+        case ELSE: printf("ELSE\n"); break;
+        case LEFT_BRACE: printf("LEFT_BRACE\n"); break;
+        case RIGHT_BRACE: printf("RIGHT_BRACE\n"); break;
+        case INT: printf("INT\n"); break;
+        case BOOL: printf("BOOL\n"); break;
+        case AND: printf("AND\n"); break;
+        case OR: printf("OR\n"); break;
+        case NOT: printf("NOT\n"); break;
+        case TRUE: printf("TRUE\n"); break;
+        case FALSE: printf("FALSE\n"); break;
+        case SEMICOLON: printf("SEMICOLON\n"); break;
+        case INTEGER: printf("INTEGER: %d\n", token->integerValue); break;
+        case BOOLEAN: printf("BOOLEAN: %d\n", token->booleanValue); break;
+        case VARIABLE_NAME: printf("VARIABLE_NAME: %s\n", token->stringName); break;
+        //emergency case
+        default: printf("Unknown token type\n"); break;
+    }
+}
+
+
+void printTokens(Token *token) {
+    while(token) {
+        printToken(token);
+        token = token->next;
+    }
 }
 
 

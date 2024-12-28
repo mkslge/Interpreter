@@ -17,6 +17,7 @@ int capture_int(char* sentence) {
 
     //first check if there is a negative sign at beginning of the string
     if(sentence[index] == '-') {
+        printf("SPACE\n");
         sol[solIndex++] = '-';
         index++;
     }
@@ -34,14 +35,18 @@ int capture_int(char* sentence) {
 
 
 int length_of_integer(int number) {
+    if(number == 0) {
+        return 1;
+    }
     int length = 0;
     //if we have a negative number we account for the - character at the front
     length = number < 0 ? length + 1 : length;
+    number = abs(number);
 
-    //then we add the log of the value to account for the digits themselve
-    length += log10(number);
-
-    //return the length
+    while(number > 0) {
+        length++;
+        number /= 10;
+    }
     return length;
 }
 
@@ -54,7 +59,7 @@ char* capture_variable_name(char* sentence) {
     int index = 0;
     int solIndex = 0;
 
-    while(!isspace(sentence[index]) && sentence[index] != '\0') {
+    while(sentence[index] != '\0' && !isspace(sentence[index])) {
         sol[solIndex++] = sentence[index++];
     }
     sol[solIndex] = '\0';
