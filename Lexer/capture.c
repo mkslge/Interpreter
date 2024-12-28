@@ -2,14 +2,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "token.c"
+#include <ctype.h>
 
-MAXIMUM_LENGTH_OF_INTEGER = 12;
+int MAXIMUM_LENGTH_OF_INTEGER = 12;
 
 /*This function converts a string to an integer*/
 int capture_int(char* sentence) {
     //allocate to store 
-    char sol[MAXIMUM_LENGTH_OF_INTEGER]  = (char)malloc(MAXIMUM_LENGTH_OF_INTEGER);
+    char *sol  = malloc(MAXIMUM_LENGTH_OF_INTEGER + 1);
 
     //variables to keep track of indices of both strings
     int index = 0;
@@ -28,9 +28,6 @@ int capture_int(char* sentence) {
     sol[solIndex] = '\0';
     //convert it to a number
     int numericSol = atoi(sol);
-    //free the space we used to store our solution
-    free(sol);
-
     
     return numericSol;
 }
@@ -47,6 +44,7 @@ int length_of_integer(int number) {
     //return the length
     return length;
 }
+
 
 
 

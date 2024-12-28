@@ -1,7 +1,7 @@
 
 #include <regex.h>
 #include <stdio.h>
-
+#include "token.c"
 int main() {
     //testing regex
         regex_t regex;
