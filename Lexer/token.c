@@ -57,14 +57,14 @@ struct Token  {
 Token* makeToken(TokenType type, char* name, int integerValue, int booleanValue) {
     //allocates memory for token
     Token *newToken = (Token *)malloc(sizeof(Token));
-
     //sets all values of token
     newToken->type = type;
-    newToken->stringName = strdup(name);
+    if(name) {
+        newToken->stringName = strdup(name);
+    }
     newToken->integerValue = integerValue;
     newToken->booleanValue = booleanValue;
     newToken->next = NULL;
-
     return newToken;
 }
 
