@@ -1,4 +1,7 @@
 #include "lexer.c"
+#include "var.c"
+#include "operation.c"
+#include "parser.c"
 
 struct ExpressionType {
     INT,
@@ -10,8 +13,12 @@ struct ExpressionType {
     IF
 };
 
-struct Variable {
-    char* name;
-};
 
+struct expression {
+    struct ExpressionType;
+    int possibleInt;
+    int possibleBool;
+    char* possibleString;
+    struct expression *next;
+};
 

@@ -1,0 +1,5 @@
+
+
+struct{
+    char* name;
+} Variable;
