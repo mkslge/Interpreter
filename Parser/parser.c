@@ -23,6 +23,15 @@ Token* match_token(Token* token, TokenType type) {
 }
 
 
+Expression* parseTokens(Token* tokenList) {
+    if(!tokenList) {
+        printf("error in token creation!\n");
+        EXIT_FAILURE;
+    }
+
+}
+
+
 
 
 

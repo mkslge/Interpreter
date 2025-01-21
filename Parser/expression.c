@@ -19,22 +19,37 @@ typedef enum {
 
 typedef struct Expression {
     ExpressionType type;
-    int possibleInt;
-    int possibleBool;
-    char* possibleString;
-    struct Expression* next;
+    union Data{
+        struct {int value} intVal;
+        struct {int value} boolVal;
+        struct {char* string} stringVal;
+        struct {OperationType operation; Expression* first; Expression* second} binop;
+        struct {Expression* condition; Expression* thenExpression; Expression* elseExpression};
+    } data;
+    
 } Expression;
 
 Expression* initExpression(ExpressionType type, int* pInt, int *pBool, char* pString) {
     Expression* expression = malloc(sizeof(Expression));
     expression->type = type;
     if(pInt) {
-        expression->possibleInt = *pInt;
+        
+        expression->data.intVal.value = *pInt;
     } else if(pBool) {
-        expression->possibleBool = *pBool;
+        expression->data.boolVal.value = *pBool;
+        
     } else if(pString) {
-        expression->possibleString = strdup(pString);
+        expression->data.stringVal.string = strdup(pString);
     }
-    expression->next = NULL;
+    
+
     return expression;
+}
+
+void deleteExpression(Expression *expression) {
+    
+}
+
+Expression* addExpression(Expression* curr, Expression* toAdd) {
+    return NULL;
 }

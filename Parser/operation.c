@@ -1,6 +1,6 @@
 #include "lexer.c"
 
-struct OperationType {
+typedef struct OperationType {
     ADD,
     SUB,
     MULT,
@@ -13,4 +13,4 @@ struct OperationType {
     NOT_EQUAL,
     OR,
     AND
-};
+} OperationType;
