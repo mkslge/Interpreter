@@ -494,6 +494,8 @@ Token* tokenize(char* sentence, Token* currList) {
 
     return NULL;
 }
+
+
 //place holder main
 int main() {
     Token* test = tokenize("int x = 5000;", NULL);

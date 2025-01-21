@@ -2,8 +2,11 @@
 #include "var.c"
 #include "operation.c"
 #include "parser.c"
+#include "token.c"
+#include <stdlib.h>
+#include <stdio.h>
 
-struct ExpressionType {
+typedef enum {
     INT,
     BOOL,
     STRING,
@@ -11,14 +14,17 @@ struct ExpressionType {
     NOT,
     BINOP,
     IF
-};
+} ExpressionType;
 
 
-struct expression {
-    struct ExpressionType;
+typedef struct Expression {
+    ExpressionType type;
     int possibleInt;
     int possibleBool;
     char* possibleString;
-    struct expression *next;
-};
+    struct Expression* next;
+} Expression;
 
+Expression* initExpression(ExpressionType type, int* pInt, int *pBool, char* pString) {
+    Expression* expression = malloc()
+}
