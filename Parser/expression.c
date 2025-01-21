@@ -26,5 +26,15 @@ typedef struct Expression {
 } Expression;
 
 Expression* initExpression(ExpressionType type, int* pInt, int *pBool, char* pString) {
-    Expression* expression = malloc()
+    Expression* expression = malloc(sizeof(Expression));
+    expression->type = type;
+    if(pInt) {
+        expression->possibleInt = *pInt;
+    } else if(pBool) {
+        expression->possibleBool = *pBool;
+    } else if(pString) {
+        expression->possibleString = strdup(pString);
+    }
+    expression->next = NULL;
+    return expression;
 }
