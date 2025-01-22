@@ -23,8 +23,9 @@ typedef struct Expression {
         struct {int value} intVal;
         struct {int value} boolVal;
         struct {char* string} stringVal;
+        struct {char* string; Expression* value} variable;
         struct {OperationType operation; Expression* first; Expression* second} binop;
-        struct {Expression* condition; Expression* thenExpression; Expression* elseExpression};
+        struct {Expression* condition; Expression* thenExpression; Expression* elseExpression} ifExpression;
     } data;
     
 } Expression;
@@ -32,22 +33,39 @@ typedef struct Expression {
 Expression* initExpression(ExpressionType type, int* pInt, int *pBool, char* pString) {
     Expression* expression = malloc(sizeof(Expression));
     expression->type = type;
-    if(pInt) {
-        
+    if(type == INT) {
         expression->data.intVal.value = *pInt;
-    } else if(pBool) {
+    } else if(type == BOOL) {
         expression->data.boolVal.value = *pBool;
         
-    } else if(pString) {
+    } else if(type == STRING) {
         expression->data.stringVal.string = strdup(pString);
-    }
+    } else if(type == ID) {
+        
+
+    } else if()
+    //still need to take care of NOT type
     
 
     return expression;
 }
 
 void deleteExpression(Expression *expression) {
-    
+    ExpressionType type = expression->type;
+    if(type == STRING) {
+        free(expression->data.stringVal.string);
+    } else if(type == BINOP) {
+        deleteExpression(expression->data.binop.first);
+        deleteExpression(expression->data.binop.second);
+    } else if(type == IF) {
+        deleteExpression(expression->data.ifExpression.condition);
+        deleteExpression(expression->data.ifExpression.thenExpression);
+        deleteExpression(expression->data.ifExpression.elseExpression);
+    } else if(type == ID) {
+        free(expression->data.variable.string);
+        deleteExpression(expression->data.variable.value);
+    }
+    free(expression);
 }
 
 Expression* addExpression(Expression* curr, Expression* toAdd) {
