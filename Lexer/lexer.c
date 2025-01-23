@@ -176,7 +176,7 @@ Token* tokenize(char* sentence, Token* currList) {
                 printf("matched to variable name\n");
 
                 char* variableName = capture_variable_name(&sentence[index]);
-                printf("Heres what we captured: %s, with length: %d\n", variableName, strlen(variableName));
+                printf("Heres what we captured: %s, with length: %lu\n", variableName, strlen(variableName));
                 currList->next = makeToken(VARIABLE_NAME,variableName,-1,-1);
                 currList = currList->next;
                 index += strlen(variableName);

@@ -1,4 +1,4 @@
-#include "lexer.c"
+#include "../lexer/lexer.c"
 #include "var.c"
 #include "operation.c"
 #include "parser.c"
@@ -45,8 +45,7 @@ Expression* initExpression(ExpressionType type, int* pInt, int *pBool, char* pSt
         expression->data.boolVal.value = *pBool;
     } else if(type == NOT) {
         expression->data.notExpression.value = *pBool;
-        //NEED TO SOLVE THIS PROBLEM
-        
+
     } else if(type == STRING) {
         expression->data.stringVal.string = strdup(pString);
     } else if(type == ID) {
