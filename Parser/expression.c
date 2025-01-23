@@ -22,29 +22,45 @@ typedef struct Expression {
     union Data{
         struct {int value} intVal;
         struct {int value} boolVal;
+        struct {int value} notExpression;
         struct {char* string} stringVal;
-        struct {char* string; Expression* value} variable;
+        struct {char* name; Expression* value} variable;
         struct {OperationType operation; Expression* first; Expression* second} binop;
-        struct {Expression* condition; Expression* thenExpression; Expression* elseExpression} ifExpression;
+        struct {int condition; Expression* thenExpression; Expression* elseExpression} ifExpression;
     } data;
     
 } Expression;
 
-Expression* initExpression(ExpressionType type, int* pInt, int *pBool, char* pString) {
+Expression* initExpression(ExpressionType type, int* pInt, int *pBool, char* pString, Expression* first, Expression* second, OperationType* operation) {
+    //allocate memory for next expression
     Expression* expression = malloc(sizeof(Expression));
+
+    //set type
     expression->type = type;
+
+    //set data based on what type the expression is
     if(type == INT) {
         expression->data.intVal.value = *pInt;
     } else if(type == BOOL) {
         expression->data.boolVal.value = *pBool;
+    } else if(type == NOT) {
+        expression->data.notExpression.value = *pBool;
+        //NEED TO SOLVE THIS PROBLEM
         
     } else if(type == STRING) {
         expression->data.stringVal.string = strdup(pString);
     } else if(type == ID) {
-        
-
-    } else if()
-    //still need to take care of NOT type
+        expression->data.variable.name = strdup(pString);
+    }  else if(type == IF) {
+        expression->data.ifExpression.condition = *pBool;
+        expression->data.ifExpression.thenExpression = first;
+        expression->data.ifExpression.elseExpression = second;
+    } else {
+        expression->data.binop.operation = *operation;
+        expression->data.binop.first = first;
+        expression->data.binop.second = second;
+    }
+    
     
 
     return expression;
@@ -62,12 +78,11 @@ void deleteExpression(Expression *expression) {
         deleteExpression(expression->data.ifExpression.thenExpression);
         deleteExpression(expression->data.ifExpression.elseExpression);
     } else if(type == ID) {
-        free(expression->data.variable.string);
+        free(expression->data.variable.name);
         deleteExpression(expression->data.variable.value);
+    } else if(type == NOT) {
+        deleteExpression(expression->data.notExpression.value);
     }
     free(expression);
 }
 
-Expression* addExpression(Expression* curr, Expression* toAdd) {
-    return NULL;
-}
